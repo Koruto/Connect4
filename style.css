@@ -1,0 +1,38 @@
+.hidden{
+    display: none;
+}
+
+.gameTitle{
+    font-size: 50px;
+    text-align: center;
+    padding: 70px 0;
+    margin-bottom: 100px;
+}
+
+.playButton{  
+    text-align: center;
+    padding: 20px 0;
+   
+}
+
+.play{
+    background-color: antiquewhite;
+    padding: 10px 20px;
+}
+
+.redBoard{
+    display: inline-block;
+    background-color: red;
+    padding: 40px 100px;
+}
+
+.blueBoard{
+    display: inline-block;
+    background-color: blue;
+    padding: 40px 100px;
+}
+
+.gameGrid{
+    background-color: gray;
+}
+
