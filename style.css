@@ -1,6 +1,12 @@
-.hidden{
-    display: none;
+*{
+    background-color: #171010;
+    box-sizing: border-box;
 }
+
+
+
+
+/* * TITLE SCREEN */
 
 .gameTitle{
     font-size: 50px;
@@ -20,19 +26,65 @@
     padding: 10px 20px;
 }
 
+/* * GAME SCREEN */
+
+.scoreBoard{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 60px;
+}
+
 .redBoard{
     display: inline-block;
+    width: 500px;
     background-color: red;
     padding: 40px 100px;
 }
 
 .blueBoard{
+    width: 500px;
     display: inline-block;
     background-color: blue;
     padding: 40px 100px;
 }
 
 .gameGrid{
-    background-color: gray;
+    background-color: #2b2b2bb6;
+    display: grid;
+    /* height: 75vh; */
+
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 5px;
+}
+
+.tile{
+    background-color: #423f3ea2;
+    height: 81px;
+    /* width: 81px; */
+}
+
+/*  * CLASSES FOR JAVASCRIPT */
+
+.center{
+    margin: 0px auto;
+    }
+    
+.hidden{
+        display: none;
+    }
+    
+.redTile, .blueTile{
+        border-radius: 50%;
+        height: 81px;
+        width: 81px;
+    }
+    
+.redTile{background-color: rgba(227, 40, 40, 0.959);}    
+.blueTile{background-color: rgba(59, 40, 236, 0.914);}
+
+.clicked{
+    cursor: not-allowed;
 }
 
