@@ -45,36 +45,34 @@ Array.prototype.forEach.call(tile, function (element) {
       console.log('Tile Already Exists!'); /* TODO Better Error */
     }
 
-    for (let i = 0; i < 6; i++) {
-      for (let j = 0; j < 7; j++) {
-        let tileName = 'tile-' + i + j;
-        let tN = document.getElementById(tileName);
-
-        if (tN.classList.contains(checkTile)) {
-          count += 1;
-        } else {
-          count = 0;
-        }
-
-        if (count == 4) window.alert(checkTile + ' Wins!');
-      }
-      count = 0;
-    }
+    // Vertical Check
 
     for (let j = 0; j < 7; j++) {
-      for (let i = 0; i < 6; i++) {
-        let tileName = 'tile-' + i + j;
-        let tN = document.getElementById(tileName);
+      let tileName = 'tile-' + element.id[5] + j;
+      let tN = document.getElementById(tileName);
 
-        if (tN.classList.contains(checkTile)) {
-          count += 1;
-        } else {
-          count = 0;
-        }
-
-        if (count == 4) window.alert(checkTile + ' Wins!');
+      if (tN.classList.contains(checkTile)) {
+        count += 1;
+      } else {
+        count = 0;
       }
-      count = 0;
+
+      if (count == 4) window.alert(checkTile + ' Wins!');
+    }
+
+    // Horizontal Check
+
+    for (let i = 0; i < 6; i++) {
+      let tileName = 'tile-' + i + element.id[6];
+      let tN = document.getElementById(tileName);
+
+      if (tN.classList.contains(checkTile)) {
+        count += 1;
+      } else {
+        count = 0;
+      }
+
+      if (count == 4) window.alert(checkTile + ' Wins!');
     }
 
     if (activePlayer) activePlayer = 0;
