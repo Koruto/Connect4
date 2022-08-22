@@ -46,7 +46,7 @@ Array.prototype.forEach.call(tile, function (element) {
     }
 
     // Vertical Check
-
+    count = 0;
     for (let j = 0; j < 7; j++) {
       let tileName = 'tile-' + element.id[5] + j;
       let tN = document.getElementById(tileName);
@@ -57,11 +57,11 @@ Array.prototype.forEach.call(tile, function (element) {
         count = 0;
       }
 
-      if (count == 4) window.alert(checkTile + ' Wins!');
+      if (count == 4) window.alert(checkTile + 'Vertical Wins!');
     }
 
     // Horizontal Check
-
+    count = 0;
     for (let i = 0; i < 6; i++) {
       let tileName = 'tile-' + i + element.id[6];
       let tN = document.getElementById(tileName);
@@ -72,7 +72,46 @@ Array.prototype.forEach.call(tile, function (element) {
         count = 0;
       }
 
-      if (count == 4) window.alert(checkTile + ' Wins!');
+      if (count == 4) window.alert(checkTile + 'Horizontal Wins!');
+    }
+
+    // Top Left to Right Bottom Diagonal Check
+    count = 0;
+    for (let i = 2; i >= 0; i--) {
+      for (let j = 0; j < 4; j++) {
+        let k = i,
+          l = j;
+
+        while (k < 6 && l < 7) {
+          let tileName = 'tile-' + k + l;
+          let tN = document.getElementById(tileName);
+          if (tN.classList.contains(checkTile)) count += 1;
+          else count = 0;
+          k++;
+          l++;
+          if (count == 4) window.alert(checkTile + 'Diagonal-Left Wins!');
+        }
+      }
+    }
+
+    // Top Right to Left Bottom Diagonal Check
+    count = 0;
+    for (let i = 2; i >= 0; i--) {
+      for (let j = 6; j > 2; j--) {
+        let k = i,
+          l = j;
+
+        while (k < 6 && l >= 0) {
+          let tileName = 'tile-' + k + l;
+          console.log(tileName);
+          let tN = document.getElementById(tileName);
+          if (tN.classList.contains(checkTile)) count += 1;
+          else count = 0;
+          k++;
+          l--;
+          if (count == 4) window.alert(checkTile + 'Diagonal-Right Wins!');
+        }
+      }
     }
 
     if (activePlayer) activePlayer = 0;
