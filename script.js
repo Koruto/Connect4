@@ -4,6 +4,7 @@ var tile = document.getElementsByClassName('tile');
 var activePlayer = 0;
 var checkTile;
 var count = 0;
+var newElement, newID;
 
 document.querySelector('.play').addEventListener('click', function () {
   /* Change Screen to Game Screen */ /* !  */ document
@@ -24,23 +25,33 @@ Array.prototype.forEach.call(tile, function (element) {
   // element.addEventListener('mouseleave', function () {
   //   element.style.backgroundColor = '#423f3ea2';
   // });
-  console.log(element);
-  console.log(1);
+  // console.log(element);
+  // console.log(1);
   /* Clicking Tile */ element.addEventListener('click', function () {
     if (activePlayer) checkTile = 'blue';
     else checkTile = 'red';
 
-    if (!element.classList.contains('clicked')) {
+    for (let i = element.id[5]; i < 6; i++) {
+      let tileName = 'tile-' + i + element.id[6];
+
+      let tN = document.getElementById(tileName);
+      if (tN.classList.contains('clicked')) break;
+      else newID = tileName;
+    }
+
+    newElement = document.getElementById(newID);
+
+    if (!newElement.classList.contains('clicked')) {
       if (activePlayer) {
-        document.getElementById(element.id).innerHTML +=
+        document.getElementById(newID).innerHTML +=
           '<div class="center blueTile"></div>';
-        element.classList.add('blue');
+        newElement.classList.add('blue');
       } else {
-        document.getElementById(element.id).innerHTML +=
+        document.getElementById(newID).innerHTML +=
           '<div class="center redTile"></div>';
-        element.classList.add('red');
+        newElement.classList.add('red');
       }
-      element.classList.add('clicked');
+      newElement.classList.add('clicked');
     } else {
       console.log('Tile Already Exists!'); /* TODO Better Error */
     }
@@ -103,7 +114,7 @@ Array.prototype.forEach.call(tile, function (element) {
 
         while (k < 6 && l >= 0) {
           let tileName = 'tile-' + k + l;
-          console.log(tileName);
+          // console.log(tileName);
           let tN = document.getElementById(tileName);
           if (tN.classList.contains(checkTile)) count += 1;
           else count = 0;
