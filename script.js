@@ -59,7 +59,7 @@ Array.prototype.forEach.call(tile, function (element) {
     // Vertical Check
     count = 0;
     for (let j = 0; j < 7; j++) {
-      let tileName = 'tile-' + element.id[5] + j;
+      let tileName = 'tile-' + newID[5] + j;
       let tN = document.getElementById(tileName);
 
       if (tN.classList.contains(checkTile)) {
@@ -74,7 +74,7 @@ Array.prototype.forEach.call(tile, function (element) {
     // Horizontal Check
     count = 0;
     for (let i = 0; i < 6; i++) {
-      let tileName = 'tile-' + i + element.id[6];
+      let tileName = 'tile-' + i + newID[6];
       let tN = document.getElementById(tileName);
 
       if (tN.classList.contains(checkTile)) {
@@ -88,41 +88,39 @@ Array.prototype.forEach.call(tile, function (element) {
 
     // Top Left to Right Bottom Diagonal Check
     count = 0;
-    for (let i = 2; i >= 0; i--) {
-      for (let j = 0; j < 4; j++) {
-        let k = i,
-          l = j;
+    // Defining the Start Point
+    let x = parseInt(newID[5]) + parseInt(newID[6]);
+    if (x > 5) x = 5;
+    let y = parseInt(newID[5]) + parseInt(newID[6]) - x;
+    if (y < 0) y = 0;
 
-        while (k < 6 && l < 7) {
-          let tileName = 'tile-' + k + l;
-          let tN = document.getElementById(tileName);
-          if (tN.classList.contains(checkTile)) count += 1;
-          else count = 0;
-          k++;
-          l++;
-          if (count == 4) window.alert(checkTile + 'Diagonal-Left Wins!');
-        }
-      }
+    while (x >= 0 && y < 7) {
+      let tileName = 'tile-' + x + y;
+      let tN = document.getElementById(tileName);
+      if (tN.classList.contains(checkTile)) count += 1;
+      else count = 0;
+      x--;
+      y++;
+      if (count == 4) window.alert(checkTile + 'Diagonal-Left Wins!');
     }
 
     // Top Right to Left Bottom Diagonal Check
-    count = 0;
-    for (let i = 2; i >= 0; i--) {
-      for (let j = 6; j > 2; j--) {
-        let k = i,
-          l = j;
+    let one = parseInt(newID[5]);
+    let two = parseInt(newID[6]);
+    let ans;
+    one > two ? (ans = two) : (ans = one);
+    x = parseInt(newID[5]) - ans;
+    y = parseInt(newID[6]) - ans;
 
-        while (k < 6 && l >= 0) {
-          let tileName = 'tile-' + k + l;
-          // console.log(tileName);
-          let tN = document.getElementById(tileName);
-          if (tN.classList.contains(checkTile)) count += 1;
-          else count = 0;
-          k++;
-          l--;
-          if (count == 4) window.alert(checkTile + 'Diagonal-Right Wins!');
-        }
-      }
+    count = 0;
+    while (x < 6 && y < 7) {
+      let tileName = 'tile-' + x + y;
+      let tN = document.getElementById(tileName);
+      if (tN.classList.contains(checkTile)) count += 1;
+      else count = 0;
+      x++;
+      y++;
+      if (count == 4) window.alert(checkTile + 'Diagonal-Right Wins!');
     }
 
     if (activePlayer) activePlayer = 0;
