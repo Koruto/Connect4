@@ -1,16 +1,104 @@
 'use strict';
 
+// Variables
+
+const mainScreen = document.querySelector('.mainScreen');
+const gameScreen = document.querySelector('.gameScreen');
+
 var tile = document.getElementsByClassName('tile');
 var activePlayer = 0;
 var checkTile;
 var count = 0;
-var newElement, newID;
+var newElement, newID, tileName;
 
+// Functions
+
+function toggleScreen() {
+  mainScreen.classList.toggle('hidden');
+  gameScreen.classList.toggle('hidden');
+}
+
+function checkTi(tileName, checkTile) {
+  let tN = document.getElementById(tileName);
+  return tN.classList.contains(checkTile);
+}
+
+function gravity(i, j) {
+  for (; i < 6; i++) {
+    tileName = 'tile-' + i + j;
+    if (checkTi(tileName, 'clicked')) break;
+    else newID = tileName;
+  }
+}
+
+function verticalCheck() {
+  for (let j = 0; j < 7; j++) {
+    tileName = 'tile-' + newID[5] + j;
+    checkTi(tileName, checkTile) ? count++ : (count = 0);
+    if (count == 4) window.alert(checkTile + 'Vertical Wins!');
+  }
+  count = 0;
+}
+
+function horizontalCheck() {
+  for (let i = 0; i < 6; i++) {
+    tileName = 'tile-' + i + newID[6];
+    checkTi(tileName, checkTile) ? count++ : (count = 0);
+    if (count == 4) window.alert(checkTile + 'Horizontal Wins!');
+  }
+  count = 0;
+}
+
+function bottomLTRCheck(x, y) {
+  if (x > 5) x = 5;
+  if (y < 0) y = 0;
+
+  while (x >= 0 && y < 7) {
+    tileName = 'tile-' + x + y;
+    checkTi(tileName, checkTile) ? count++ : (count = 0);
+    x--;
+    y++;
+    if (count == 4) window.alert(checkTile + 'Diagonal-Left Wins!');
+  }
+  count = 0;
+}
+
+function topLTRCheck(x, y) {
+  let one = parseInt(newID[5]);
+  let two = parseInt(newID[6]);
+  let ans;
+  one > two ? (ans = two) : (ans = one);
+  x = parseInt(newID[5]) - ans;
+  y = parseInt(newID[6]) - ans;
+
+  while (x < 6 && y < 7) {
+    tileName = 'tile-' + x + y;
+    checkTi(tileName, checkTile) ? count++ : (count = 0);
+    x++;
+    y++;
+    if (count == 4) window.alert(checkTile + 'Diagonal-Right Wins!');
+  }
+  count = 0;
+}
+
+function winCheck() {
+  let x = parseInt(newID[5]) + parseInt(newID[6]);
+  let y = parseInt(newID[5]) + parseInt(newID[6]) - x;
+
+  verticalCheck();
+  horizontalCheck();
+  bottomLTRCheck(x, y);
+  topLTRCheck(x, y);
+}
+
+// Change Screen to Game Screen
 document.querySelector('.play').addEventListener('click', function () {
-  /* Change Screen to Game Screen */ /* !  */ document
-    .querySelector('.mainScreen')
-    .classList.add('hidden');
-  document.querySelector('.gameScreen').classList.remove('hidden');
+  toggleScreen();
+});
+
+// Return Button
+document.querySelector('.return').addEventListener('click', function () {
+  toggleScreen();
 });
 
 Array.prototype.forEach.call(tile, function (element) {
@@ -27,17 +115,13 @@ Array.prototype.forEach.call(tile, function (element) {
   // });
   // console.log(element);
   // console.log(1);
-  /* Clicking Tile */ element.addEventListener('click', function () {
-    if (activePlayer) checkTile = 'blue';
-    else checkTile = 'red';
 
-    for (let i = element.id[5]; i < 6; i++) {
-      let tileName = 'tile-' + i + element.id[6];
+  // Clicking Tile
 
-      let tN = document.getElementById(tileName);
-      if (tN.classList.contains('clicked')) break;
-      else newID = tileName;
-    }
+  element.addEventListener('click', function () {
+    activePlayer ? (checkTile = 'blue') : (checkTile = 'red');
+
+    gravity(element.id[5], element.id[6]);
 
     newElement = document.getElementById(newID);
 
@@ -56,74 +140,8 @@ Array.prototype.forEach.call(tile, function (element) {
       console.log('Tile Already Exists!'); /* TODO Better Error */
     }
 
-    // Vertical Check
-    count = 0;
-    for (let j = 0; j < 7; j++) {
-      let tileName = 'tile-' + newID[5] + j;
-      let tN = document.getElementById(tileName);
+    winCheck();
 
-      if (tN.classList.contains(checkTile)) {
-        count += 1;
-      } else {
-        count = 0;
-      }
-
-      if (count == 4) window.alert(checkTile + 'Vertical Wins!');
-    }
-
-    // Horizontal Check
-    count = 0;
-    for (let i = 0; i < 6; i++) {
-      let tileName = 'tile-' + i + newID[6];
-      let tN = document.getElementById(tileName);
-
-      if (tN.classList.contains(checkTile)) {
-        count += 1;
-      } else {
-        count = 0;
-      }
-
-      if (count == 4) window.alert(checkTile + 'Horizontal Wins!');
-    }
-
-    // Top Left to Right Bottom Diagonal Check
-    count = 0;
-    // Defining the Start Point
-    let x = parseInt(newID[5]) + parseInt(newID[6]);
-    if (x > 5) x = 5;
-    let y = parseInt(newID[5]) + parseInt(newID[6]) - x;
-    if (y < 0) y = 0;
-
-    while (x >= 0 && y < 7) {
-      let tileName = 'tile-' + x + y;
-      let tN = document.getElementById(tileName);
-      if (tN.classList.contains(checkTile)) count += 1;
-      else count = 0;
-      x--;
-      y++;
-      if (count == 4) window.alert(checkTile + 'Diagonal-Left Wins!');
-    }
-
-    // Top Right to Left Bottom Diagonal Check
-    let one = parseInt(newID[5]);
-    let two = parseInt(newID[6]);
-    let ans;
-    one > two ? (ans = two) : (ans = one);
-    x = parseInt(newID[5]) - ans;
-    y = parseInt(newID[6]) - ans;
-
-    count = 0;
-    while (x < 6 && y < 7) {
-      let tileName = 'tile-' + x + y;
-      let tN = document.getElementById(tileName);
-      if (tN.classList.contains(checkTile)) count += 1;
-      else count = 0;
-      x++;
-      y++;
-      if (count == 4) window.alert(checkTile + 'Diagonal-Right Wins!');
-    }
-
-    if (activePlayer) activePlayer = 0;
-    else activePlayer = 1;
+    activePlayer ? (activePlayer = 0) : (activePlayer = 1);
   });
 });

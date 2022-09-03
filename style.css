@@ -13,6 +13,7 @@
     text-align: center;
     padding: 70px 0;
     margin-bottom: 100px;
+    color: aliceblue;
 }
 
 .playButton{  
@@ -28,6 +29,11 @@
 
 /* * GAME SCREEN */
 
+.return{
+    
+    background-color: aqua;
+}
+
 .scoreBoard{
     display: flex;
     width: 100%;
@@ -38,14 +44,14 @@
 .redBoard{
     display: inline-block;
     width: 500px;
-    background-color: red;
+    background-color: rgba(245, 59, 59, 0.853);
     padding: 40px 100px;
 }
 
 .blueBoard{
     width: 500px;
     display: inline-block;
-    background-color: blue;
+    background-color: rgba(48, 124, 238, 0.926);
     padding: 40px 100px;
 }
 
@@ -62,6 +68,7 @@
 .tile{
     background-color: #423f3ea2;
     height: 81px;
+    
     /* width: 81px; */
 }
 
